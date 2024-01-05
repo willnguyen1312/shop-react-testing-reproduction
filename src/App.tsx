@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Page, Text } from "@shopify/polaris";
+import { useEffect, useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export function AppOne() {
+  const [isLoading, setIsLoading] = useState(true);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
+
+  if (isLoading) {
+    return <Text as="p">Loading</Text>;
+  }
+
+  return <Text as="h1">Loaded</Text>;
 }
 
-export default App
+export function AppTwo() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
+
+  return (
+    <div>
+      {isLoading ? <Text as="p">Loading</Text> : <Text as="h1">Loaded</Text>}
+    </div>
+  );
+}
+
+import { Button, Form, TextField } from "@shopify/polaris";
+
+export function AppThree() {
+  const [result, setResult] = useState(0);
+  const [firstValue, setFirstValue] = useState(0);
+  const [secondValue, setSecondValue] = useState(0);
+
+  function handleSubmit() {
+    setResult(firstValue + secondValue);
+  }
+
+  return (
+    <Page>
+      <Form onSubmit={handleSubmit}>
+        <TextField
+          type="number"
+          value={firstValue.toString()}
+          onChange={(value) => setFirstValue(+value)}
+          label="First number"
+          autoComplete="off"
+        />
+        <TextField
+          type="number"
+          value={secondValue.toString()}
+          onChange={(value) => setSecondValue(+value)}
+          label="Second Number"
+          autoComplete="off"
+        />
+
+        <Text visuallyHidden as="h3">
+          Result: {result}
+        </Text>
+
+        <p role="status">Result: {result}</p>
+
+        <Button submit>Calculate</Button>
+      </Form>
+    </Page>
+  );
+}
