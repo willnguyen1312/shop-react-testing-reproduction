@@ -4,15 +4,12 @@ import i18n from "@shopify/polaris/locales/en.json";
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { AppThree } from "./App.tsx";
-import { worker } from "./mocks/browser";
+import { App } from "./App.tsx";
 
-worker.start().then(() => {
-  ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-      <AppProvider i18n={i18n}>
-        <AppThree />
-      </AppProvider>
-    </React.StrictMode>,
-  );
-});
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <AppProvider i18n={i18n}>
+      <App />
+    </AppProvider>
+  </React.StrictMode>,
+);

@@ -1,41 +1,9 @@
 import { Page, Text } from "@shopify/polaris";
-import { useEffect, useState } from "react";
-
-export function AppOne() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
-
-  if (isLoading) {
-    return <Text as="p">Loading</Text>;
-  }
-
-  return <Text as="h1">Loaded</Text>;
-}
-
-export function AppTwo() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
-
-  return (
-    <div>
-      {isLoading ? <Text as="p">Loading</Text> : <Text as="h1">Loaded</Text>}
-    </div>
-  );
-}
+import { useState } from "react";
 
 import { Button, Form, TextField } from "@shopify/polaris";
 
-export function AppThree() {
+export function App() {
   const [result, setResult] = useState(0);
   const [firstValue, setFirstValue] = useState(0);
   const [secondValue, setSecondValue] = useState(0);

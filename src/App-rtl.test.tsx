@@ -1,55 +1,21 @@
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, it, vi } from "vitest";
+import { describe, it } from "vitest";
 
 import { PolarisTestProvider } from "@shopify/polaris";
-import { AppOne, AppThree, AppTwo } from "./App";
+import { App } from "./App";
 import { checkA11y } from "./testUtils";
 
-describe("<AppOne /> from rtl", () => {
-  it("renders without crashing", async () => {
-    vi.useFakeTimers();
-    const { container } = render(<AppOne />);
-
-    await act(async () => await vi.runAllTimersAsync());
-
-    screen.getByText(/Loaded/i);
-
-    expect(container.innerHTML).toMatchInlineSnapshot(
-      `"<h1 class="Polaris-Text--root">Loaded</h1>"`,
-    );
-
-    vi.useRealTimers();
-    await checkA11y(container);
-  });
-});
-
-describe("<AppTwo /> from rtl", () => {
-  it("renders without crashing", async () => {
-    vi.useFakeTimers();
-    const { container } = render(<AppTwo />);
-
-    await act(async () => await vi.runAllTimersAsync());
-
-    screen.getByText(/Loaded/i);
-
-    expect(container.innerHTML).toMatchInlineSnapshot(
-      `"<div><h1 class="Polaris-Text--root">Loaded</h1></div>"`,
-    );
-
-    vi.useRealTimers();
-    await checkA11y(container);
-  });
-});
-
-describe("<AppThree /> from rtl", () => {
+describe("Testing App component with rtl", () => {
   it("should work for normal user", async () => {
     const user = userEvent.setup();
-    render(
+    const { container } = render(
       <PolarisTestProvider>
-        <AppThree />
+        <App />
       </PolarisTestProvider>,
     );
+
+    await checkA11y(container);
 
     const firstNumberInput = screen.getByLabelText(/First number/i);
     await user.click(firstNumberInput);
@@ -71,7 +37,7 @@ describe("<AppThree /> from rtl", () => {
     const user = userEvent.setup();
     render(
       <PolarisTestProvider>
-        <AppThree />
+        <App />
       </PolarisTestProvider>,
     );
 
