@@ -1,9 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, it } from "vitest";
+import { describe, it, vi } from "vitest";
 
 import { PolarisTestProvider } from "@shopify/polaris";
 import { App } from "./App";
+import { AppInfinite } from "./AppInfinite";
 import { checkA11y } from "./testUtils";
 
 describe("Testing App component with rtl", () => {
@@ -53,5 +54,18 @@ describe("Testing App component with rtl", () => {
     await user.tab();
     await user.keyboard("{enter}");
     expect(result).toHaveTextContent("Result: 50");
+  });
+});
+
+describe.only("Testing AppInfinite component with rtl", () => {
+  it("should work for normal user", async () => {
+    const mockCallAPI = vi.fn();
+
+    mockCallAPI.mockResolvedValue(undefined);
+    render(<AppInfinite callAPI={mockCallAPI} />);
+
+    await screen.findByText(/Ready/i);
+
+    expect(mockCallAPI).toHaveBeenCalledTimes(1);
   });
 });
